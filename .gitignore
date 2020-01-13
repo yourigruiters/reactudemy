@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/course_assets
 /.pnp
 .pnp.js
 
