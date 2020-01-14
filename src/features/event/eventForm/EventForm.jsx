@@ -1,36 +1,85 @@
 import React, { Component } from "react";
-import { Segment, Form, Button } from 'semantic-ui-react';
+import { Segment, Form, Button } from "semantic-ui-react";
 
 class EventForm extends Component {
+  state = {
+    title: "",
+    date: "",
+    city: "",
+    venue: "",
+    hostedBy: ""
+  };
+
+  handleFormSubmit = e => {
+    e.preventDefault();
+
+    this.props.createEvent(this.state);
+  };
+
+  handleChange = ({ target: {name, value} }) => {
+    this.setState({
+      [name]: value
+    });
+  };
+
   render() {
     const { cancelFormOpen } = this.props;
+    const { title, date, city, venue, hostedBy } = this.state;
     return (
       <Segment>
-        <Form>
+        <Form onSubmit={this.handleFormSubmit} autoComplete="off">
           <Form.Field>
             <label>Event Title</label>
-            <input placeholder="First Name" />
+            <input
+              placeholder="Event Title"
+              name="title"
+              value={title}
+              onChange={this.handleChange}
+            />
           </Form.Field>
           <Form.Field>
             <label>Event Date</label>
-            <input type="date" placeholder="Event Date" />
+            <input
+              type="date"
+              name="date"
+              value={date}
+              onChange={this.handleChange}
+              placeholder="Event Date"
+            />
           </Form.Field>
           <Form.Field>
             <label>City</label>
-            <input placeholder="City event is taking place" />
+            <input
+              placeholder="City event is taking place"
+              name="city"
+              value={city}
+              onChange={this.handleChange}
+            />
           </Form.Field>
           <Form.Field>
             <label>Venue</label>
-            <input placeholder="Enter the Venue of the event" />
+            <input
+              placeholder="Enter the Venue of the event"
+              name="venue"
+              value={venue}
+              onChange={this.handleChange}
+            />
           </Form.Field>
           <Form.Field>
             <label>Hosted By</label>
-            <input placeholder="Enter the name of person hosting" />
+            <input
+              placeholder="Enter the name of person hosting"
+              name="hostedBy"
+              value={hostedBy}
+              onChange={this.handleChange}
+            />
           </Form.Field>
           <Button positive type="submit">
             Submit
           </Button>
-          <Button type="button" onClick={cancelFormOpen}>Cancel</Button>
+          <Button type="button" onClick={cancelFormOpen}>
+            Cancel
+          </Button>
         </Form>
       </Segment>
     );

@@ -58,13 +58,23 @@ class EventDashboard extends Component {
   state = {
     events: eventsFromDashboard,
     isOpen: false
-  }
+  };
 
   handleIsOpenToggle = () => {
-    this.setState((prevState) => ({
-        isOpen: !prevState.isOpen
-    }))
-  }
+    this.setState(prevState => ({
+      isOpen: !prevState.isOpen
+    }));
+  };
+
+  handleCreateEvent = newEvent => {
+    newEvent.id = Math.floor(Math.random() * 1000);
+    newEvent.hostPhotoURL = "/assets/user.png";
+
+    this.setState(({ events }) => ({
+      events: [...events, newEvent],
+      isOpen: false
+    }));
+  };
 
   render() {
     const { events, isOpen } = this.state;
@@ -75,8 +85,17 @@ class EventDashboard extends Component {
           <EventList events={events} />
         </Grid.Column>
         <Grid.Column width={6}>
-          <Button positive content="Create Event" onClick={this.handleIsOpenToggle}/>
-          { isOpen && <EventForm cancelFormOpen={this.handleIsOpenToggle} />}
+          <Button
+            positive
+            content="Create Event"
+            onClick={this.handleIsOpenToggle}
+          />
+          {isOpen && (
+            <EventForm
+              cancelFormOpen={this.handleIsOpenToggle}
+              createEvent={this.handleCreateEvent}
+            />
+          )}
         </Grid.Column>
       </Grid>
     );
